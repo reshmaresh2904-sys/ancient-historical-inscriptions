@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>தமிழர் கல்வெட்டுக் களஞ்சியம் | BYTE CODERS</title>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101526;color:#fff8e9;font-family:Arial,sans-serif}
+header{padding:20px 6%;background:#1b2438;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{color:#efc77c;font-size:21px;font-weight:bold}
+nav a{color:white;text-decoration:none;margin:8px}
+.hero{text-align:center;padding:65px 7%;background:linear-gradient(135deg,#24344a,#704321,#171d30)}
+.hero h1{font-size:clamp(30px,6vw,52px);color:#ffdc98}
+p{line-height:1.9;color:#e0dfdf}
+section{padding:42px 7%}
+h2{color:#f0ca7d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card,.panel{background:#1b2438;padding:22px;border:1px solid #66543a;border-radius:14px}
+.card h3{color:#f5d391}
+button{padding:12px 17px;margin:5px;border:0;border-radius:8px;background:#e5b65e;color:#201707;font-weight:bold;cursor:pointer}
+input,textarea{width:100%;padding:13px;margin:10px 0;background:#0f1729;color:white;border:1px solid #687087;border-radius:8px;font:inherit}
+textarea{min-height:130px}
+#preview{display:none;max-width:100%;max-height:320px;margin:15px auto}
+.small{font-size:13px;color:#c6cbd6}
+footer{text-align:center;padding:25px;background:#1b2438}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">🏛 BYTE CODERS</div>
+ <nav>
+  <a href="#sites">கல்வெட்டுகள்</a>
+  <a href="#ocr">AI OCR</a>
+  <a href="#about">எங்களைப் பற்றி</a>
+ </nav>
+</header>
+
+<div class="hero">
+ <p>பண்டைய தமிழர் வரலாற்றைத் தேடும் டிஜிட்டல் பயணம்</p>
+ <h1>தமிழர் கல்வெட்டுக் களஞ்சியம்</h1>
+ <p>கல்லில் பொறிக்கப்பட்ட வரலாற்றை அறியுங்கள்!
+ தமிழ்க் கல்வெட்டுகளைத் தேடுங்கள், படங்களைப் பதிவேற்றுங்கள்,
+ எழுத்துகளை அடையாளம் காணுங்கள், ஒலியாகக் கேளுங்கள்.</p>
+ <button onclick="document.getElementById('sites').scrollIntoView({behavior:'smooth'})">கல்வெட்டுகளை ஆராய்க</button>
+ <button onclick="document.getElementById('ocr').scrollIntoView({behavior:'smooth'})">AI மூலம் படிக்க</button>
+</div>
+
+<section id="sites">
+ <h2>📜 வரலாற்றுக் கல்வெட்டுகள்</h2>
+ <p>ஒரு கல்வெட்டின் வரலாற்றை அறிய, அதன் விவரங்களையும் ஒலி விளக்கத்தையும் தேர்ந்தெடுக்கவும்.</p>
+ <input id="search" placeholder="கல்வெட்டு அல்லது இடத்தின் பெயரைத் தேடுங்கள்..." oninput="filterSites()">
+ <div class="grid" id="siteGrid">
+
+  <div class="card">
+   <h3>மாங்குளம் கல்வெட்டுகள்</h3>
+   <p>📍 இடம்: மதுரை அருகில்</p>
+   <p>தமிழ்-பிராமி எழுத்துக்களில் அமைந்த தொடக்ககாலக் கல்வெட்டுகள். பாண்டியர் கால வரலாறு மற்றும் சமண மரபு பற்றிய தகவல்களை வழங்குகின்றன.</p>
+   <button onclick="speak('மாங்குளம் கல்வெட்டுகள் மதுரை அருகில் உள்ளன. இவை தொடக்ககால தமிழ் பிராமி எழுத்துக்களையும் பண்டைய வரலாற்றையும் அறிய உதவுகின்றன.')">🔊 ஒலி விளக்கம்</button>
+  </div>
+
+  <div class="card">
+   <h3>ஜம்பை கல்வெட்டு</h3>
+   <p>📍 இடம்: ஜம்பை, தமிழ்நாடு</p>
+   <p>அதியமான் நெடுமான் அஞ்சியைப் பற்றிக் குறிப்பிடும் முக்கியமான தமிழ்-பிராமிக் கல்வெட்டு.</p>
+   <button onclick="speak('ஜம்பை கல்வெட்டு அதியமான் நெடுமான் அஞ்சியைப் பற்றிக் குறிப்பிடுகிறது. இது தொடக்ககாலத் தமிழ் அரசியல் வரலாற்றை அறிய உதவுகிறது.')">🔊 ஒலி விளக்கம்</button>
+  </div>
+
+  <div class="card">
+   <h3>தஞ்சைப் பெரிய கோயில் கல்வெட்டுகள்</h3>
+   <p>📍 இடம்: தஞ்சாவூர்</p>
+   <p>சோழர் காலக் கோயில் நிர்வாகம், கொடைகள் மற்றும் சமூக வரலாறு பற்றிய பதிவுகள் காணப்படுகின்றன.</p>
+   <button onclick="speak('தஞ்சைப் பெரிய கோயில் கல்வெட்டுகள் சோழர் காலக் கொடைகள், கோயில் நிர்வாகம் மற்றும் சமூக வரலாற்றைப் பற்றி எடுத்துரைக்கின்றன.')">🔊 ஒலி விளக்கம்</button>
+  </div>
+
+  <div class="card">
+   <h3>மாமல்லபுரம் கல்வெட்டுகள்</h3>
+   <p>📍 இடம்: மாமல்லபுரம்</p>
+   <p>பல்லவர் காலக் கட்டிடக்கலை, சிற்பங்கள் மற்றும் சமய வரலாற்றை அறிய உதவும் வரலாற்றுச் சான்றுகள்.</p>
+   <button onclick="speak('மாமல்லபுரம் கல்வெட்டுகளும் நினைவுச் சின்னங்களும் பல்லவர் காலக் கலை, கட்டிடக்கலை மற்றும் சமய வரலாற்றை அறிய உதவுகின்றன.')">🔊 ஒலி விளக்கம்</button>
+  </div>
+
+ </div>
+ <p class="small">குறிப்பு: இவை அறிமுகத் தகவல்கள். துல்லியமான தேதிகள் மற்றும் மொழிபெயர்ப்புகளுக்கு நம்பகமான வரலாற்று ஆதாரங்களைச் சரிபார்க்கவும்.</p>
+</section>
+
+<section id="ocr">
+ <h2>🤖 AI தமிழ் கல்வெட்டு எழுத்துணரி</h2>
+ <p>கல்வெட்டுப் படத்தைப் பதிவேற்றித் தமிழ் எழுத்துகளை அடையாளம் காண முயற்சி செய்யுங்கள்.</p>
+ <div class="panel">
+  <label for="imageInput">கல்வெட்டுப் படத்தைத் தேர்ந்தெடுக்கவும்</label>
+  <input type="file" id="imageInput" accept="image/*">
+  <img id="preview" alt="பதிவேற்றிய கல்வெட்டுப் படம்">
+  <button id="ocrButton" onclick="recognizeText()">தமிழ் எழுத்துகளை அடையாளம் காண்க</button>
+  <p id="status">முதலில் ஒரு படத்தைத் தேர்ந்தெடுக்கவும்.</p>
+  <label for="ocrOutput">அடையாளம் காணப்பட்ட உரை</label>
+  <textarea id="ocrOutput" placeholder="அடையாளம் காணப்பட்ட தமிழ் உரை இங்கே தோன்றும்..."></textarea>
+  <button onclick="showExplanation()">உரையைப் பற்றி அறிய</button>
+  <button onclick="speak(document.getElementById('ocrOutput').value)">🔊 தமிழில் கேட்க</button>
+  <div id="explanation"></div>
+  <p class="small">பழங்கால எழுத்துருக்கள், சேதமடைந்த கற்கள், மங்கலான படங்கள் போன்றவற்றில் OCR தவறுகள் ஏற்படலாம். கிடைக்கும் உரை சரியான வரலாற்று மொழிபெயர்ப்பு என உறுதிப்படுத்தப்படாது.</p>
+ </div>
+</section>
+
+<section id="about">
+ <h2>எங்கள் நோக்கம்</h2>
+ <div class="grid">
+  <div class="card"><h3>🔍 தேடல்</h3><p>வரலாற்றுக் கல்வெட்டுகளை எளிதாகத் தேடுதல்.</p></div>
+  <div class="card"><h3>🤖 எழுத்துணர்வு</h3><p>படத்திலிருந்து தமிழ் எழுத்துகளை அடையாளம் காண முயற்சி செய்தல்.</p></div>
+  <div class="card"><h3>🔊 ஒலி</h3><p>கல்வெட்டு விவரங்களைத் தமிழில் ஒலியாகக் கேட்குதல்.</p></div>
+ </div>
+</section>
+
+<footer>
+ <p>© 2026 BYTE CODERS | தமிழர் வரலாற்றைப் பாதுகாப்போம்</p>
+</footer>
+
+<script>
+const imageInput=document.getElementById("imageInput");
+const preview=document.getElementById("preview");
+const statusText=document.getElementById("status");
+
+imageInput.addEventListener("change",function(){
+ const file=this.files[0];
+ if(!file)return;
+ if(!file.type.startsWith("image/")){
+  statusText.textContent="சரியான படக் கோப்பைத் தேர்ந்தெடுக்கவும்.";
+  return;
+ }
+ preview.src=URL.createObjectURL(file);
+ preview.style.display="block";
+ statusText.textContent="படம் தயார். இப்போது எழுத்துணர்வு பொத்தானை அழுத்தவும்.";
+});
+
+async function recognizeText(){
+ const file=imageInput.files[0];
+ if(!file){
+  statusText.textContent="முதலில் கல்வெட்டுப் படத்தைத் தேர்ந்தெடுக்கவும்.";
+  return;
+ }
+ if(!window.Tesseract){
+  statusText.textContent="OCR வசதியை ஏற்ற முடியவில்லை. இணைய இணைப்பைச் சரிபார்க்கவும்.";
+  return;
+ }
+ const btn=document.getElementById("ocrButton");
+ btn.disabled=true;
+ statusText.textContent="தமிழ் எழுத்துணர்வு இயந்திரம் ஏற்றப்படுகிறது. காத்திருக்கவும்...";
+ try{
+  const result=await Tesseract.recognize(file,"tam+eng",{
+   logger:m=>{
+    if(m.status)statusText.textContent=
+     m.status+(m.progress!=null?" — "+Math.round(m.progress*100)+"%":"");
+   }
+  });
+  document.getElementById("ocrOutput").value=result.data.text.trim();
+  statusText.textContent=result.data.text.trim()
+   ?"எழுத்துணர்வு முடிந்தது. கிடைத்த உரையைச் சரிபார்க்கவும்."
+   :"எழுத்துகள் கண்டறியப்படவில்லை. தெளிவான படத்தை முயற்சிக்கவும்.";
+ }catch(e){
+  console.error(e);
+  statusText.textContent="எழுத்துணர்வு தோல்வியடைந்தது. இணையத்தைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.";
+ }finally{
+  btn.disabled=false;
+ }
+}
+
+function speak(text){
+ if(!text||!text.trim()){
+  alert("முதலில் உரையை உள்ளிடவும்.");
+  return;
+ }
+ if(!("speechSynthesis" in window)){
+  alert("இந்த உலாவியில் ஒலி வசதி கிடைக்கவில்லை.");
+  return;
+ }
+ speechSynthesis.cancel();
+ const msg=new SpeechSynthesisUtterance(text);
+ msg.lang="ta-IN";
+ msg.rate=0.85;
+ speechSynthesis.speak(msg);
+}
+
+function showExplanation(){
+ const text=document.getElementById("ocrOutput").value.trim();
+ const box=document.getElementById("explanation");
+ if(!text){
+  box.textContent="முதலில் கல்வெட்டு உரையை அடையாளம் காணவும் அல்லது உள்ளிடவும்.";
+  return;
+ }
+ box.textContent="அடையாளம் காணப்பட்ட உரை: "+text+
+ " — இது OCR மூலம் பெறப்பட்ட உரை மட்டுமே. இதன் உண்மையான வரலாற்றுப் பொருளை அறிய நம்பகமான கல்வெட்டு ஆய்வு நூல் அல்லது நிபுணரின் உதவி தேவை.";
+}
+
+function filterSites(){
+ const q=document.getElementById("search").value.toLowerCase();
+ document.querySelectorAll("#siteGrid .card").forEach(card=>{
+  card.style.display=card.innerText.toLowerCase().includes(q)?"":"none";
+ });
+}
+</script>
+</body>
+</html>
